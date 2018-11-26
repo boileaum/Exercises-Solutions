@@ -10,6 +10,8 @@
 #          Ported to Python by Tom Deakin, July 2013
 #
 
+from __future__ import print_function
+
 # Import the Python OpenCL API
 import pyopencl as cl
 # Import the Python Maths Library (for vectors)
@@ -93,7 +95,7 @@ for a, b, c, r in zip(h_a, h_b, h_c, h_r):
     if tmp*tmp < TOL*TOL:
         correct += 1
     else:
-        print "tmp", tmp, "h_a", a, "h_b", b, "h_c", c, "h_r", r
+        print("tmp", tmp, "h_a", a, "h_b", b, "h_c", c, "h_r", r)
 
 # Summarize results
-print "1 vector adds to find R = A+B+C:", correct, "out of", LENGTH, "results were correct."
+print("1 vector adds to find R = A+B+C:", correct, "out of", LENGTH, "results were correct.")

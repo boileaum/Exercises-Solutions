@@ -11,6 +11,7 @@
 #
 
 
+from __future__ import print_function
 import pyopencl as cl
 import numpy
 from time import time
@@ -40,7 +41,7 @@ work_group_size = program.pi.get_work_group_info(cl.kernel_work_group_info.WORK_
 
 # Now that we know the size of the work_groups, we can set the number of work
 # groups, the actual number of steps, and the step size
-nwork_groups = in_nsteps/(work_group_size*niters)
+nwork_groups = in_nsteps//(work_group_size*niters)
 
 if nwork_groups < 1:
 	nwork_groups = device.max_compute_units
@@ -52,8 +53,8 @@ step_size = 1.0 / float(nsteps)
 # vector to hold partial sum
 h_psum = numpy.empty(nwork_groups).astype(numpy.float32)
 
-print nwork_groups, "work groups of size", work_group_size, ".",
-print nsteps, "Integration steps"
+print(nwork_groups, "work groups of size", work_group_size, ".", end=' ')
+print(nsteps, "Integration steps")
 
 d_partial_sums = cl.Buffer(context, cl.mem_flags.WRITE_ONLY, h_psum.nbytes)
 
@@ -78,6 +79,6 @@ pi_res = h_psum.sum() * step_size
 
 # Stop the timer
 rtime = time() - rtime
-print "The calculation ran in", rtime, "seconds"
-print "pi =", pi_res, "for", nsteps, "steps"
+print("The calculation ran in", rtime, "seconds")
+print("pi =", pi_res, "for", nsteps, "steps")
 
